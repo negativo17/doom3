@@ -1,6 +1,6 @@
 Name:           doom3
 Version:        1.3.1.1304
-Release:        6%{?dist}
+Release:        7
 Summary:        Doom 3
 License:        Proprietary
 URL:            http://www.idsoftware.com/
@@ -19,13 +19,6 @@ Source7:        %{name}-roe-pak000.pk4
 Source8:        %{name}-roe-docs.tar.gz
 # Patch files
 Source9:        %{name}-%{version}.tar.gz
-
-NoSource:       1
-NoSource:       2
-NoSource:       3
-NoSource:       4
-NoSource:       5
-NoSource:       7
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  tar
@@ -116,6 +109,9 @@ fi
 %{_datadir}/applications/%{name}-roe.desktop
 
 %changelog
+* Thu Jul 02 2020 Simone Caronni <negativo17@gmail.com> - 1.3.1.1304-7
+- Remove dist and NoSource tags.
+
 * Sat Jan 23 2016 Simone Caronni <negativo17@gmail.com> - 1.3.1.1304-6
 - Add license macro.
 
