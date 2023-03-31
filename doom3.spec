@@ -1,6 +1,6 @@
 Name:           doom3
 Version:        1.3.1.1304
-Release:        7
+Release:        8
 Summary:        Doom 3
 License:        Proprietary
 URL:            http://www.idsoftware.com/
@@ -21,7 +21,7 @@ Source8:        %{name}-roe-docs.tar.gz
 Source9:        %{name}-%{version}.tar.gz
 
 BuildRequires:  desktop-file-utils
-BuildRequires:  tar
+
 Requires:       doom3-engine >= %{version}
 
 %description
@@ -64,7 +64,6 @@ deep in the ruins of the ancient civilization.
 cp -fr usr %{buildroot}
 
 # Doom 3
-desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 install -p -m 644 %{SOURCE1} %{buildroot}%{_datadir}/%{name}/base/pak000.pk4
 install -p -m 644 %{SOURCE2} %{buildroot}%{_datadir}/%{name}/base/pak001.pk4
 install -p -m 644 %{SOURCE3} %{buildroot}%{_datadir}/%{name}/base/pak002.pk4
@@ -73,10 +72,14 @@ install -p -m 644 %{SOURCE5} %{buildroot}%{_datadir}/%{name}/base/pak004.pk4
 install -p -m 644 base/*pk4 %{buildroot}%{_datadir}/%{name}/base
 
 # Resurrection of Evil
-desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}-roe.desktop
 install -p -m 644 %{SOURCE7} %{buildroot}%{_datadir}/%{name}/d3xp/pak000.pk4
 install -p -m 644 d3xp/*pk4 %{buildroot}%{_datadir}/%{name}/d3xp
 
+%check
+desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
+desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}-roe.desktop
+
+%if 0%{?rhel} == 7
 %post
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
 
@@ -88,9 +91,9 @@ fi
 
 %posttrans
 /usr/bin/gtk-update-icon-cache -f %{_datadir}/icons/hicolor &>/dev/null || :
+%endif
 
 %files
-%{!?_licensedir:%global license %%doc}
 %license License.txt
 %doc help.htm htm images manual.htm
 %doc MSR.txt readme.txt README
@@ -101,7 +104,6 @@ fi
 %{_datadir}/icons/hicolor/*/apps/%{name}.*
 
 %files roe
-%{!?_licensedir:%global license %%doc}
 %license License.txt
 %doc deu enu esp fra ita README
 %{_bindir}/%{name}-roe
@@ -109,6 +111,9 @@ fi
 %{_datadir}/applications/%{name}-roe.desktop
 
 %changelog
+* Fri Mar 31 2023 Simone Caronni <negativo17@gmail.com> - 1.3.1.1304-8
+- Clean up SPEC file.
+
 * Thu Jul 02 2020 Simone Caronni <negativo17@gmail.com> - 1.3.1.1304-7
 - Remove dist and NoSource tags.
 
